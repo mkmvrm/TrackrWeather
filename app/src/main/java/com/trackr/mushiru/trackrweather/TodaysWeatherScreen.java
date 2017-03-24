@@ -43,12 +43,9 @@ public class TodaysWeatherScreen extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        Log.e("BLAHBLAH: ", "111111");
-
+        // GRAB DATA FROM RetrieveTodaysWeather.java
         queryResponse = getIntent().getStringExtra("RESPONSE_STRING");
-
         cityNameStripped = getIntent().getStringExtra("CITY_NAME_STRIPPED");
-
 
         cityNameTxt = (TextView) findViewById(R.id.cityNameTxtS2);
         descriptionTxt = (TextView) findViewById(R.id.descriptionTxt);
@@ -57,41 +54,25 @@ public class TodaysWeatherScreen extends AppCompatActivity {
         windSpeedTxt = (TextView) findViewById(R.id.windSpeedTxt);
 
         forecastBtn = (Button) findViewById(R.id.forecastBtn);
-
         progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
-//
-//
-//        responseTxt = (TextView) findViewById(R.id.responseText);
-//        searchBtn = (Button) findViewById(R.id.searchBtn);
-//        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-        //FIX SPACING CITYNAMETXT, add 'todays weather' to header, refractor code to better names, like screen2
 
         try {
 
-            Log.d("RESPONSE", queryResponse);
+            Log.d("RESPONSE_TODAYS_WEATHER", queryResponse);
 
             JSONObject openWeatherMapQuery = (JSONObject) new JSONTokener(queryResponse).nextValue();
             name = openWeatherMapQuery.getString("name");
             cityNameTxt.setText(name);
 
-            JSONArray weatherArr = openWeatherMapQuery.getJSONArray("weather");
-
-//            String description = openWeatherMapQuery.getString("cord.weather.description");
-
-            String description = weatherArr.getJSONObject(0).getString("description");
+            String description = openWeatherMapQuery.getJSONArray("weather").getJSONObject(0).getString("description");
             descriptionTxt.setText(description);
 
-
-//            String temperature = openWeatherMapQuery.getString("list.main.temp");
             String temperature = openWeatherMapQuery.getJSONObject("main").getString("temp");
             temperatureTxt.setText(temperature);
 
-//            String humidityPerCent = openWeatherMapQuery.getString("main.humidity");
             String humidityPerCent = openWeatherMapQuery.getJSONObject("main").getString("humidity");
             humidityTxt.setText(humidityPerCent + "%");
 
-//            String windSpeed = openWeatherMapQuery.getString("wind.speed");
             String windSpeed = openWeatherMapQuery.getJSONObject("wind").getString("speed");
             windSpeedTxt.setText(windSpeed + "mph");
 
@@ -103,13 +84,7 @@ public class TodaysWeatherScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-                // FIGURE OUT HOW TO GET THE NAME TO SEND ANOTHER URL REQUEST FROM THE CLASS BEFORE
-//                String cityNameStripped = cityNameTxt.getText().toString().replaceAll("\\s+","").toLowerCase();
-
-
-//                savedInstanceState.putStringArray(new String[] {});
-
+                // RETRIEVE OPEN WEATHER MAP API RESPONSE BASED OFF OF USER TEXTVIEW INPUT
                 retrieve5DayForecast = new Retrieve5DayForecast(progressBar2, responseTxt, cityNameStripped, TodaysWeatherScreen.this);
                 retrieve5DayForecast.execute();
 

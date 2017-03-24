@@ -69,7 +69,6 @@ public class ForecastScreen extends AppCompatActivity {
 
 
         String queryResponse = getIntent().getStringExtra("RESPONSE_STRING");
-//      String firstQueryResponse = getIntent().getStringExtra("FIRST_RESPONSE_STRING");
 
         //NEED???????????????
         cityNameStripped = getIntent().getStringExtra("CITY_NAME_STRIPPED");
@@ -79,19 +78,9 @@ public class ForecastScreen extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 finish();
-
-//                Intent intent = new Intent(ForecastScreen.this, TodaysWeatherScreen.class);
-//                intent.putExtra("RESPONSE_STRING", firstQueryResponse);
-//                intent.putExtra("CITY_NAME_STRIPPED", cityNameStripped);
-//                startActivity(intent);
-
             }
         });
-
-
-
 
         TextView[] textViewDates = {(TextView) findViewById(R.id.date1Txt),
                 (TextView) findViewById(R.id.date2Txt),
@@ -128,79 +117,27 @@ public class ForecastScreen extends AppCompatActivity {
             // FILL IN ALL TEXTVIEWS WILL QUERY DATA
             for (int i = 0; i < 5; i++){
 
-                // DATE
-                Long epoch = Long.parseLong(forecastArr.getJSONObject(i).getString("dt"));
-                Date date = new Date(epoch * 1000);
-                DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+                // UPDATE DATE TEXTVIEW
+                Long unixTime = Long.parseLong(forecastArr.getJSONObject(i).getString("dt"));
+                Date date = new Date(unixTime * 1000);
+                DateFormat format = new SimpleDateFormat("MM/dd/yy");
                 format.setTimeZone(TimeZone.getTimeZone(country));
                 String formatted = format.format(date);
                 Log.d("DATE US", formatted);
                 textViewDates[i].setText(formatted);
 
-                // DESCRIPTION
+                // UPDATE DESCRIPTION TEXTVIEW
                 String description = forecastArr.getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("main");
                 textViewDescs[i].setText(description);
 
-                // TEMPERATURE
-                String maxTemp = forecastArr.getJSONObject(i).getJSONObject("temp").getString("max");
-                String minTemp = forecastArr.getJSONObject(i).getJSONObject("temp").getString("min");
-                textViewTemps[i].setText(maxTemp + "/" + minTemp);
-
+                // UPDATE TEMPERATURE TEXTVIEW
+                String temp = forecastArr.getJSONObject(i).getJSONObject("temp").getString("day");
+                textViewTemps[i].setText(temp);
             }
-
-
-
-//            format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
-//            String formatted = format.format(date);
-//            Log.d("DATE UTC", formatted);
-//            System.out.println(formatted);
-
-//            JSONArray weatherArr = openWeatherMapQuery.getJSONArray("weather");
-//
-//            String description = weatherArr.getJSONObject(0).getString("description");
-//            descriptionTxt.setText(description);
-//
-//            String temperature = openWeatherMapQuery.getJSONObject("main").getString("temp");
-//            temperatureTxt.setText(temperature);
-//
-//            String humidityPerCent = openWeatherMapQuery.getJSONObject("main").getString("humidity");
-//            humidityTxt.setText(humidityPerCent + "%");
-//
-//            String windSpeed = openWeatherMapQuery.getJSONObject("wind").getString("speed");
-//            windSpeedTxt.setText(windSpeed + "mph");
 
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage(), e);
         }
-
-//        try {
-//
-//            if (queryResponse != null) {
-//                Log.e("Err", queryResponse);
-//                JSONObject openWeatherMapQuery = (JSONObject) new JSONTokener(queryResponse).nextValue();
-//            }else{
-//                Log.e("Err", "QUERY NULL");
-//            }
-//            String name = openWeatherMapQuery.getString("name");
-//            cityNameTxt.setText(name);
-//
-//            String description = openWeatherMapQuery.getString("weather.description");
-//            descriptionTxt.setText(description);
-//
-//            String temperature = openWeatherMapQuery.getString("list.main.temp");
-//            temperatureTxt.setText(temperature);
-//
-//
-//            String humidityPerCent = openWeatherMapQuery.getString("main.humidity");
-//            humidityTxt.setText(humidityPerCent + "%");
-//
-//            String windSpeed = openWeatherMapQuery.getString("wind.speed");
-//            windSpeedTxt.setText(windSpeed + "mph");
-//
-//
-//        } catch (JSONException e) {
-//            Log.e("ERROR", e.getMessage(), e);
-//        }
 
     }
 
