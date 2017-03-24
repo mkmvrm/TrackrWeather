@@ -80,7 +80,7 @@ public class ForecastScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Log.d("BACK BUTTON PRESSED", "*******************************");
+                finish();
 
 //                Intent intent = new Intent(ForecastScreen.this, TodaysWeatherScreen.class);
 //                intent.putExtra("RESPONSE_STRING", firstQueryResponse);
