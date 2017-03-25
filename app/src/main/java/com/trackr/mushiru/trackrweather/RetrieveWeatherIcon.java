@@ -87,7 +87,6 @@ public class RetrieveWeatherIcon extends AsyncTask<Void, Void, String> {
                 } catch (Exception e) {
                     Log.d("STRING TO BITMAP FAILED", e.getMessage());
                 }
-
             }
     }
 
