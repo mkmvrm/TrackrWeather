@@ -24,39 +24,9 @@ import java.util.TimeZone;
 
 public class ForecastScreen extends AppCompatActivity {
 
-    RetrieveTodaysWeather rft;
-
-    String cityNameStripped;
-
     Button backBtn;
 
     TextView cityNameTxtS3;
-
-    TextView date1Txt;
-    TextView date2Txt;
-    TextView date3Txt;
-    TextView date4Txt;
-    TextView date5Txt;
-
-    TextView desc1Txt;
-    TextView desc2Txt;
-    TextView desc3Txt;
-    TextView desc4Txt;
-    TextView desc5Txt;
-
-    TextView temp1Txt;
-    TextView temp2Txt;
-    TextView temp3Txt;
-    TextView temp4Txt;
-    TextView temp5Txt;
-
-    TextView descriptionTxt;
-    TextView temperatureTxt;
-    TextView humidityTxt;
-    TextView windSpeedTxt;
-
-    TextView responseTxt;
-    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,11 +40,10 @@ public class ForecastScreen extends AppCompatActivity {
 
         String queryResponse = getIntent().getStringExtra("RESPONSE_STRING");
 
-        //NEED???????????????
-        cityNameStripped = getIntent().getStringExtra("CITY_NAME_STRIPPED");
 
         cityNameTxtS3 = (TextView) findViewById(R.id.cityNameTxtS3);
 
+        // RETURN TO THE PREVIOUS ACTIVITY WHEN THE BACK BUTTON IS PRESSED
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

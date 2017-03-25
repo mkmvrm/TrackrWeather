@@ -24,22 +24,19 @@ public class RetrieveTodaysWeather extends AsyncTask<Void, Void, String> {
     final String API_URL = "http://api.openweathermap.org/data/2.5/weather?";
 
     private ProgressBar progressBar;
-    private TextView responseView;
+    private TextView errorTxt;
     private String cityNameStripped;
     private Class classname;
 
 
-//    private StringBuilder responseSB;
 
     private Activity activity;
 
     //DELETE RESPONSEVIEW
-    RetrieveTodaysWeather(ProgressBar progressBar, TextView responseView, String cityNameStripped, Activity activity){
+    RetrieveTodaysWeather(ProgressBar progressBar, TextView responseView, TextView errorTxt, String cityNameStripped, Activity activity){
         this.progressBar = progressBar;
-        this.responseView = responseView;
+        this.errorTxt = errorTxt;
         this.cityNameStripped = cityNameStripped;
-//        this.responseSB = responseSB;
-        this.classname = classname;
 
         this.activity = activity;
     }
@@ -54,7 +51,9 @@ public class RetrieveTodaysWeather extends AsyncTask<Void, Void, String> {
         // Do some validation here
 
         try {
-            URL url = new URL(API_URL + "q=" + cityNameStripped + "&units=imperial&APPID=" + API_KEY);
+            String urlStr= API_URL + "q=" + cityNameStripped + "&units=imperial&APPID=" + API_KEY;
+            Log.d("URL TO SEND", urlStr);
+            URL url = new URL(urlStr);
             // http://api.openweathermap.org/data/2.5/weather?q=SantaBarbara&units=imperial&APPID=71c9847a4dea7b8bf18c4c126f892abf
 
 //            String urlActual = "http://api.openweathermap.org/data/2.5/weather?q=SantaBarbara&units=imperial&APPID=71c9847a4dea7b8bf18c4c126f892abf";
@@ -85,17 +84,20 @@ public class RetrieveTodaysWeather extends AsyncTask<Void, Void, String> {
     }
 
     protected void onPostExecute(String response) {
-        if(response == null) {
-            response = "THERE WAS AN ERROR";
-        }
         progressBar.setVisibility(View.GONE);
 
-        Log.i("INFO", response);
+        if(response == null) {
+            errorTxt.setVisibility(View.VISIBLE);
+            response = "City Name Not Found";
+        }else {
 
-        Intent intent = new Intent(activity, TodaysWeatherScreen.class);
-        intent.putExtra("RESPONSE_STRING", response);
-        intent.putExtra("CITY_NAME_STRIPPED", cityNameStripped);
-        activity.startActivity(intent);
+            Log.i("INFO", response);
+
+            Intent intent = new Intent(activity, TodaysWeatherScreen.class);
+            intent.putExtra("RESPONSE_STRING", response);
+            intent.putExtra("CITY_NAME_STRIPPED", cityNameStripped);
+            activity.startActivity(intent);
+        }
 
 //        queryResponse = response;
 //

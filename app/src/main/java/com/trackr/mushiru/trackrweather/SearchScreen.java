@@ -16,6 +16,7 @@ public class SearchScreen extends AppCompatActivity {
 
     private Button searchBtn;
     private TextView cityNameTxt;
+    private TextView errorTxt;
     private TextView responseTxt;
     private ProgressBar progressBar;
 
@@ -29,6 +30,7 @@ public class SearchScreen extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         cityNameTxt = (TextView) findViewById(R.id.cityNameTxt);
+        errorTxt = (TextView) findViewById(R.id.errorTxt);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -38,7 +40,8 @@ public class SearchScreen extends AppCompatActivity {
             public void onClick(View view) {
                 String cityNameStripped = cityNameTxt.getText().toString().replaceAll("\\s+","").toLowerCase();
 
-                retrieveTodaysWeather = new RetrieveTodaysWeather(progressBar, responseTxt, cityNameStripped, SearchScreen.this);
+                errorTxt.setVisibility(View.GONE);
+                retrieveTodaysWeather = new RetrieveTodaysWeather(progressBar, responseTxt, errorTxt, cityNameStripped, SearchScreen.this);
                 retrieveTodaysWeather.execute();
 
 

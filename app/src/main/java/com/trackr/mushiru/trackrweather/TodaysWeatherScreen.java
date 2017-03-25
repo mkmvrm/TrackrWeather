@@ -32,6 +32,7 @@ public class TodaysWeatherScreen extends AppCompatActivity {
     TextView windSpeedTxt;
 
     Button forecastBtn;
+    Button backBtn1;
 
     TextView responseTxt;
     ProgressBar progressBar2;
@@ -54,7 +55,15 @@ public class TodaysWeatherScreen extends AppCompatActivity {
         windSpeedTxt = (TextView) findViewById(R.id.windSpeedTxt);
 
         forecastBtn = (Button) findViewById(R.id.forecastBtn);
+        backBtn1 = (Button) findViewById(R.id.backBtn1);
         progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
+
+        backBtn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         try {
 
@@ -85,7 +94,7 @@ public class TodaysWeatherScreen extends AppCompatActivity {
             public void onClick(View view) {
 
                 // RETRIEVE OPEN WEATHER MAP API RESPONSE BASED OFF OF USER TEXTVIEW INPUT
-                retrieve5DayForecast = new Retrieve5DayForecast(progressBar2, responseTxt, cityNameStripped, TodaysWeatherScreen.this);
+                retrieve5DayForecast = new Retrieve5DayForecast(progressBar2, cityNameStripped, TodaysWeatherScreen.this);
                 retrieve5DayForecast.execute();
 
             }
