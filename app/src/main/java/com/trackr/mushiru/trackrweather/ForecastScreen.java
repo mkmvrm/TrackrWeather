@@ -89,7 +89,7 @@ public class ForecastScreen extends AppCompatActivity {
                 // UPDATE DATE TEXTVIEW
                 Long unixTime = Long.parseLong(forecastArr.getJSONObject(i).getString("dt"));
                 Date date = new Date(unixTime * 1000);
-                DateFormat format = new SimpleDateFormat("MM/dd/yy");
+                DateFormat format = new SimpleDateFormat("MM/dd");
                 format.setTimeZone(TimeZone.getTimeZone(country));
                 String formatted = format.format(date);
                 Log.d("DATE US", formatted);

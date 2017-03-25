@@ -47,7 +47,7 @@ public class SearchScreen extends AppCompatActivity {
 
 //
 //                while (queryResponse = retrieveTodaysWeather.getResponse())
-//                ;
+//
 
 //                retrieveTodaysWeather.doInBackground();
 
