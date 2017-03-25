@@ -19,6 +19,7 @@ import org.json.JSONTokener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -78,16 +79,16 @@ public class ForecastScreen extends AppCompatActivity {
                 (TextView) findViewById(R.id.temp4Txt),
                 (TextView) findViewById(R.id.temp5Txt)};
 
-
         try {
 
             Log.d("RESPONSE SCREEN 3", queryResponse);
             JSONObject openWeatherMapQuery = (JSONObject) new JSONTokener(queryResponse).nextValue();
 
             String name = openWeatherMapQuery.getJSONObject("city").getString("name");
-            cityNameTxtS3.setText(name);
 
             String country = openWeatherMapQuery.getJSONObject("city").getString("country");
+
+            cityNameTxtS3.setText(name + ", " + country);
 
 
             JSONArray forecastArr = openWeatherMapQuery.getJSONArray("list");
@@ -98,11 +99,12 @@ public class ForecastScreen extends AppCompatActivity {
                 // UPDATE DATE TEXTVIEW
                 Long unixTime = Long.parseLong(forecastArr.getJSONObject(i).getString("dt"));
                 Date date = new Date(unixTime * 1000);
-                DateFormat format = new SimpleDateFormat("MM/dd");
-                format.setTimeZone(TimeZone.getTimeZone(country));
-                String formatted = format.format(date);
-                Log.d("DATE US", formatted);
-                textViewDates[i].setText(formatted);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                String[] weekNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
+                textViewDates[i].setText(weekNames[dayOfWeek-1]);
 
                 // UPDATE DESCRIPTION TEXTVIEW
                 String description = forecastArr.getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("main");

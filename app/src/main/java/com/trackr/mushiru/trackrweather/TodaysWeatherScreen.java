@@ -85,14 +85,16 @@ public class TodaysWeatherScreen extends AppCompatActivity {
 
 
             JSONObject openWeatherMapQuery = (JSONObject) new JSONTokener(queryResponse).nextValue();
+
             name = openWeatherMapQuery.getString("name");
-            cityNameTxt.setText(name);
+
+            String country = openWeatherMapQuery.getJSONObject("sys").getString("country");
+            cityNameTxt.setText(name + ", " + country);
 
             String iconName = openWeatherMapQuery.getJSONArray("weather").getJSONObject(0).getString("icon");
 
             retrieveWeatherIcon = new RetrieveWeatherIcon(iconName, weatherImg);
             retrieveWeatherIcon.execute();
-
 
 //            // GRAB ICON FROM OPEN WEATHER MAP
 //            String iconName = openWeatherMapQuery.getJSONArray("weather").getJSONObject(0).getString("icon");
