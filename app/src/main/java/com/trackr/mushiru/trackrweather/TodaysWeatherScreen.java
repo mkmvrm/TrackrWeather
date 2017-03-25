@@ -1,5 +1,7 @@
 package com.trackr.mushiru.trackrweather;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,9 +19,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class TodaysWeatherScreen extends AppCompatActivity {
 
     Retrieve5DayForecast retrieve5DayForecast;
+    RetrieveWeatherIcon retrieveWeatherIcon;
 
     String name;
     String cityNameStripped;
@@ -36,6 +45,8 @@ public class TodaysWeatherScreen extends AppCompatActivity {
 
     TextView responseTxt;
     ProgressBar progressBar2;
+
+    ImageView weatherImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,8 @@ public class TodaysWeatherScreen extends AppCompatActivity {
         backBtn1 = (Button) findViewById(R.id.backBtn1);
         progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
 
+        weatherImg = (ImageView) findViewById(R.id.weatherImg);
+
         backBtn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,12 +79,32 @@ public class TodaysWeatherScreen extends AppCompatActivity {
         });
 
         try {
-
             Log.d("RESPONSE_TODAYS_WEATHER", queryResponse);
+
 
             JSONObject openWeatherMapQuery = (JSONObject) new JSONTokener(queryResponse).nextValue();
             name = openWeatherMapQuery.getString("name");
             cityNameTxt.setText(name);
+
+            String iconName = openWeatherMapQuery.getJSONArray("weather").getJSONObject(0).getString("icon");
+
+            retrieveWeatherIcon = new RetrieveWeatherIcon(iconName, weatherImg);
+            retrieveWeatherIcon.execute();
+
+
+//            // GRAB ICON FROM OPEN WEATHER MAP
+//            String iconName = openWeatherMapQuery.getJSONArray("weather").getJSONObject(0).getString("icon");
+//            String imageUrl = "http://openweathermap.org/img/w/" + iconName + ".png";
+//            Log.d("IMAGE URL", imageUrl);
+//            try {
+//                InputStream is = (InputStream)new URL(imageUrl).getContent();
+//                Bitmap bitmap = BitmapFactory.decodeStream(is);
+//                weatherImg.setImageBitmap(bitmap);
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
             String description = openWeatherMapQuery.getJSONArray("weather").getJSONObject(0).getString("description");
             descriptionTxt.setText(description);

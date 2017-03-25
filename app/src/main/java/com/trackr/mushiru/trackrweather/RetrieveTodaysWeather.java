@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -99,14 +102,6 @@ public class RetrieveTodaysWeather extends AsyncTask<Void, Void, String> {
             activity.startActivity(intent);
         }
 
-//        queryResponse = response;
-//
-//        responseSB.append(response);
-
-//        responseView.setText(response);
     }
 
-//    public String getResponse(){
-//        return responseSB.toString();
-//    }
 }
