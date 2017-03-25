@@ -160,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingEnd="35dp"
-                android:text="Temp (F°)"
+                android:text="Temperature"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 

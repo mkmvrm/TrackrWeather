@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,8 +36,6 @@ public class TodaysWeatherScreen extends AppCompatActivity {
 
     TextView responseTxt;
     ProgressBar progressBar2;
-
-    ImageView weatherIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

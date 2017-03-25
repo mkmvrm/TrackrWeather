@@ -129,7 +129,7 @@
                 android:elevation="1dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="Temp(F°)"
+                android:text="Temp"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold" />
