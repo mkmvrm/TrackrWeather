@@ -30,17 +30,17 @@ public class RetrieveTodaysWeather extends AsyncTask<Void, Void, String> {
     private TextView errorTxt;
     private String cityNameStripped;
     private Class classname;
-
+    private String units;
 
 
     private Activity activity;
 
     //DELETE RESPONSEVIEW
-    RetrieveTodaysWeather(ProgressBar progressBar, TextView responseView, TextView errorTxt, String cityNameStripped, Activity activity){
+    RetrieveTodaysWeather(ProgressBar progressBar, String units, TextView responseView, TextView errorTxt, String cityNameStripped, Activity activity){
         this.progressBar = progressBar;
         this.errorTxt = errorTxt;
         this.cityNameStripped = cityNameStripped;
-
+        this.units = units;
         this.activity = activity;
     }
 
@@ -54,7 +54,7 @@ public class RetrieveTodaysWeather extends AsyncTask<Void, Void, String> {
         // Do some validation here
 
         try {
-            String urlStr= API_URL + "q=" + cityNameStripped + "&units=imperial&APPID=" + API_KEY;
+            String urlStr= API_URL + "q=" + cityNameStripped + "&units=" + units + "&APPID=" + API_KEY;
             Log.d("URL TO SEND", urlStr);
             URL url = new URL(urlStr);
             // http://api.openweathermap.org/data/2.5/weather?q=SantaBarbara&units=imperial&APPID=71c9847a4dea7b8bf18c4c126f892abf
@@ -99,6 +99,8 @@ public class RetrieveTodaysWeather extends AsyncTask<Void, Void, String> {
             Intent intent = new Intent(activity, TodaysWeatherScreen.class);
             intent.putExtra("RESPONSE_STRING", response);
             intent.putExtra("CITY_NAME_STRIPPED", cityNameStripped);
+            intent.putExtra("UNITS", units);
+
             activity.startActivity(intent);
         }
 

@@ -31,6 +31,7 @@ public class TodaysWeatherScreen extends AppCompatActivity {
 
     String name;
     String cityNameStripped;
+    String units;
     String queryResponse;
 
     Button searchBtn;
@@ -58,6 +59,7 @@ public class TodaysWeatherScreen extends AppCompatActivity {
         // GRAB DATA FROM RetrieveTodaysWeather.java
         queryResponse = getIntent().getStringExtra("RESPONSE_STRING");
         cityNameStripped = getIntent().getStringExtra("CITY_NAME_STRIPPED");
+        units = getIntent().getStringExtra("UNITS");
 
         cityNameTxt = (TextView) findViewById(R.id.cityNameTxtS2);
         descriptionTxt = (TextView) findViewById(R.id.descriptionTxt);
@@ -110,13 +112,18 @@ public class TodaysWeatherScreen extends AppCompatActivity {
             descriptionTxt.setText(description);
 
             String temperature = openWeatherMapQuery.getJSONObject("main").getString("temp");
-            temperatureTxt.setText(temperature);
+            String windSpeed = openWeatherMapQuery.getJSONObject("wind").getString("speed");
 
             String humidityPerCent = openWeatherMapQuery.getJSONObject("main").getString("humidity");
             humidityTxt.setText(humidityPerCent + "%");
 
-            String windSpeed = openWeatherMapQuery.getJSONObject("wind").getString("speed");
-            windSpeedTxt.setText(windSpeed + "mph");
+            if(units.equals("imperial")) {
+                temperatureTxt.setText(temperature + " (F°)");
+                windSpeedTxt.setText(windSpeed + " mph");
+            }else {
+                temperatureTxt.setText(temperature + " (C°)");
+                windSpeedTxt.setText(windSpeed + " m/s");
+            }
 
         } catch (JSONException e) {
             Log.e("ERROR", e.getMessage(), e);
@@ -127,7 +134,7 @@ public class TodaysWeatherScreen extends AppCompatActivity {
             public void onClick(View view) {
 
                 // RETRIEVE OPEN WEATHER MAP API RESPONSE BASED OFF OF USER TEXTVIEW INPUT
-                retrieve5DayForecast = new Retrieve5DayForecast(progressBar2, cityNameStripped, TodaysWeatherScreen.this);
+                retrieve5DayForecast = new Retrieve5DayForecast(progressBar2, units, cityNameStripped, TodaysWeatherScreen.this);
                 retrieve5DayForecast.execute();
 
             }

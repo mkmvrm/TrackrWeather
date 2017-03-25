@@ -25,12 +25,14 @@ public class Retrieve5DayForecast extends AsyncTask<Void, Void, String> {
 
     private ProgressBar progressBar;
     private String cityNameStripped;
+    private String units;
 
     private Activity activity;
 
-    Retrieve5DayForecast(ProgressBar progressBar, String cityNameStripped, Activity activity){
+    Retrieve5DayForecast(ProgressBar progressBar, String units, String cityNameStripped, Activity activity){
         this.progressBar = progressBar;
         this.cityNameStripped = cityNameStripped;
+        this.units = units;
 
         this.activity = activity;
     }
@@ -42,7 +44,7 @@ public class Retrieve5DayForecast extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... urls) {
 
         try {
-            URL url = new URL(API_URL + "q=" + cityNameStripped + "&cnt=5&units=imperial&APPID=" + API_KEY);
+            URL url = new URL(API_URL + "q=" + cityNameStripped + "&cnt=5&units=" + units + "&APPID=" + API_KEY);
             // http://api.openweathermap.org/data/2.5/forecast/daily?q=Ojai&cnt=5&units=imperial&appid=71c9847a4dea7b8bf18c4c126f892abf
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -78,6 +80,7 @@ public class Retrieve5DayForecast extends AsyncTask<Void, Void, String> {
 
         Intent intent = new Intent(activity, ForecastScreen.class);
         intent.putExtra("RESPONSE_STRING", response);
+        intent.putExtra("UNITS", units);
         activity.startActivity(intent);
 
     }

@@ -27,6 +27,7 @@ public class ForecastScreen extends AppCompatActivity {
     Button backBtn;
 
     TextView cityNameTxtS3;
+    TextView tempTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +40,17 @@ public class ForecastScreen extends AppCompatActivity {
 
 
         String queryResponse = getIntent().getStringExtra("RESPONSE_STRING");
+        String units = getIntent().getStringExtra("UNITS");
 
 
         cityNameTxtS3 = (TextView) findViewById(R.id.cityNameTxtS3);
+        tempTxt = (TextView) findViewById(R.id.tempTxt);
+
+        if(units.equals("imperial"))
+            tempTxt.setText("Temp (F°)");
+        else
+            tempTxt.setText("Temp (C°)");
+
 
         // RETURN TO THE PREVIOUS ACTIVITY WHEN THE BACK BUTTON IS PRESSED
         backBtn.setOnClickListener(new View.OnClickListener() {

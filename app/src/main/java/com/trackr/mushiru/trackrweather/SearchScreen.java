@@ -2,15 +2,19 @@ package com.trackr.mushiru.trackrweather;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 
 public class SearchScreen extends AppCompatActivity {
+
+    //MAKE ALL VARIABLES PRIVATE, ORGANIZE VARIABLES
 
     RetrieveTodaysWeather retrieveTodaysWeather;
 
@@ -19,6 +23,7 @@ public class SearchScreen extends AppCompatActivity {
     private TextView errorTxt;
     private TextView responseTxt;
     private ProgressBar progressBar;
+    private Switch unitSwitch;
 
     private String queryResponse;
 
@@ -33,15 +38,21 @@ public class SearchScreen extends AppCompatActivity {
         errorTxt = (TextView) findViewById(R.id.errorTxt);
         searchBtn = (Button) findViewById(R.id.searchBtn);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
+        unitSwitch = (Switch) findViewById(R.id.unitSwitch);
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String cityNameStripped = cityNameTxt.getText().toString().replaceAll("\\s+","").toLowerCase();
+                String units;
+
+                if(unitSwitch.isChecked())
+                    units = "imperial";
+                else
+                    units = "metric";
 
                 errorTxt.setVisibility(View.GONE);
-                retrieveTodaysWeather = new RetrieveTodaysWeather(progressBar, responseTxt, errorTxt, cityNameStripped, SearchScreen.this);
+                retrieveTodaysWeather = new RetrieveTodaysWeather(progressBar, units, responseTxt, errorTxt, cityNameStripped, SearchScreen.this);
                 retrieveTodaysWeather.execute();
 
 
