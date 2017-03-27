@@ -31,8 +31,8 @@ public class SearchScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         cityNameTxt = (TextView) findViewById(R.id.cityNameTxt);
         errorTxt = (TextView) findViewById(R.id.errorTxt);
@@ -56,7 +56,6 @@ public class SearchScreen extends AppCompatActivity {
                 retrieveTodaysWeather.execute();
 
 
-//
 //                while (queryResponse = retrieveTodaysWeather.getResponse())
 //
 

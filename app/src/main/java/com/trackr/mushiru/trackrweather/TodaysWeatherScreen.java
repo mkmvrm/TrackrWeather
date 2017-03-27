@@ -53,8 +53,8 @@ public class TodaysWeatherScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.todays_weather_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         // GRAB DATA FROM RetrieveTodaysWeather.java
         queryResponse = getIntent().getStringExtra("RESPONSE_STRING");
